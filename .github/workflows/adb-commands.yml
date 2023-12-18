@@ -19,10 +19,10 @@ jobs:
       - name: Start emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: 34
           target: default
-          arch: x86_64
-          profile: Nexus 6
+          arch: arm64-v8a
+          profile: Pixel_3a
           emulator-options: "-writable-system"
           script: |
             adb root
@@ -35,4 +35,3 @@ jobs:
           adb root
           adb shell "remount"
           adb shell "mount" | grep system
-
