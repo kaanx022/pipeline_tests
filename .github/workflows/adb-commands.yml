@@ -1,0 +1,37 @@
+name: ADB Commands Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Start emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: default
+          arch: x86_64
+          profile: Nexus 6
+          script: |
+            adb root
+            adb shell "remount"
+            adb shell "mount" | grep system
+
+      - name: Run ADB Commands
+        run: |
+          adb devices
+          adb root
+          adb shell "remount"
+          adb shell "mount" | grep system
+
